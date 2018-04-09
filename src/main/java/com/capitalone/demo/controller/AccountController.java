@@ -35,13 +35,8 @@ public class AccountController {
     this.accountService = accountService;
   }
 
-  /*-
-  @Autowired
-  private AccountRepository accountRepository;
-  -*/
   @GetMapping
   public List<Account> getAllAccounts() {
-    // return this.accountRepository.findAll();
     return accountService.getAllAccounts();
   }
 
@@ -52,7 +47,6 @@ public class AccountController {
 
   @PostMapping
   public ResponseEntity<Account> addAccount(@RequestBody final Account account) {
-    // final Account newAccount = this.accountRepository.save(account);
 
     final Account newAccount = accountService.createAccount(account);
     final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{accountNumber}").buildAndExpand(newAccount.getAccountNumber()).toUri();

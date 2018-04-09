@@ -15,27 +15,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/*- DROP TABLE bank_account;
-DROP TABLE bank_account;
-
-CREATE TABLE bank_account
-(
-  id SERIAL PRIMARY KEY,
-  full_name  VARCHAR(128) NOT NULL,
-  balance integer NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    last_modified_by VARCHAR(128) NOT NULL,
-    last_modified_at TIMESTAMP NOT NULL
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE bank_account
-  OWNER TO vista;
-
-
--*/
-
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "bank_account")
@@ -139,33 +118,4 @@ public class Account {
     balance -= amount;
   }
 
-  /*-
-  @Override
-  public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof Account)) return false;
-  
-      Account that = (Account) o;
-  
-      if (balance != that.balance) return false;
-      if (accountNumber != null ? !accountNumber.equals(that.accountNumber) : that.accountNumber != null)
-          return false;
-      return  fullName==null ? that.fullName==null : fullName.equals(that.fullName);
-          }
-  
-  @Override
-  public int hashCode() {
-      int result = accountNumber != null ? accountNumber.hashCode() : 0;
-      result = 31 * result + balance;
-      result = fullName == null ? result : 31 * result + fullName.hashCode();
-      return result;
-  }
-  
-  @Override
-  public String toString() {
-      return "AccountEntity{" +
-              "accountNumber=" + accountNumber +
-              ", balance=" + balance +
-              '}';
-  }-*/
 }
