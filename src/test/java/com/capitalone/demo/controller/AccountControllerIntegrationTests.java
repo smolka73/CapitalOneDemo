@@ -20,8 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,6 +35,7 @@ import com.capitalone.demo.DemoApplication;
 import com.capitalone.demo.config.PostgreRepositoryConfig;
 import com.capitalone.demo.entity.Account;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -90,16 +93,19 @@ public class AccountControllerIntegrationTests {
   }
 
   @Test
-  public void updateAccount() {
-    final Account updatedAccount = new Account("This is an updated todo", 600);
-    final HttpEntity<Account> entity = new HttpEntity<Account>(updatedAccount);
+  public void updateAccountName() throws JsonProcessingException {
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+    final HttpEntity<String> entity = new HttpEntity<String>("{\"name\":\"This is an updated account\"}", headers);
     final Map<String, String> urlVariables = new HashMap<String, String>();
     urlVariables.put("accountNumber", "1");
-    final ResponseEntity<Account> responseEntity = this.restTemplate.exchange(this.URL + "/accounts/{accountNumber}", HttpMethod.PUT, entity, Account.class, urlVariables);
+    final ResponseEntity<Account> responseEntity = this.restTemplate.exchange(this.URL + "/accounts/{accountNumber}/name", HttpMethod.PUT, entity, Account.class, urlVariables);
 
     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(responseEntity.getBody().getAccountNumber()).isEqualTo(1L);
-    assertThat(responseEntity.getBody().getFullName()).isEqualTo("This is an updated todo");
+    assertThat(responseEntity.getBody().getFullName()).isEqualTo("This is an updated account");
   }
 
   @Test

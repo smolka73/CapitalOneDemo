@@ -9,7 +9,7 @@ public interface AccountService {
 
   Account get(Integer accountNumber) throws UnknownAccountException;
 
-  void deposit(Integer accountNumber, int amount) throws UnknownAccountException;
+  Account deposit(Integer accountNumber, int amount) throws UnknownAccountException;
 
   Account withdraw(Integer accountNumber, int amount) throws UnknownAccountException;
 
@@ -21,5 +21,5 @@ public interface AccountService {
 
   List<Account> getAllAccounts();
 
-  public Account updateAccount(Integer accountNumber, Account account);
+  public Account updateAccountName(Integer accountNumber, String newName);
 }

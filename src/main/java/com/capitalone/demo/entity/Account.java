@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,6 +31,7 @@ public class Account {
   private int balance;
 
   @Column(name = "full_name", nullable = false, length = 128)
+  @Pattern(regexp = "^[a-zA-Z -]{3,128}$")
   private String fullName;
 
   @Column(name = "created_at", nullable = false)

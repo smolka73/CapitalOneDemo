@@ -19,12 +19,6 @@ class AccountServiceImpl implements AccountService {
   @Autowired
   private AccountRepository accountRepository;
 
-  /*-
-  @Autowired
-  AccountServiceImpl(AccountRepository accountRepository) {
-      this.accountRepository = accountRepository;
-  }
-  -*/
   @Transactional(readOnly = true)
   @Override
   public Account get(Integer accountNumber) {
@@ -32,18 +26,17 @@ class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public void deposit(Integer accountNumber, int amount) {
+  public Account deposit(Integer accountNumber, int amount) {
     Account account = getAccountEntity(accountNumber);
     account.deposit(amount);
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
   public Account withdraw(Integer accountNumber, int amount) {
     Account account = getAccountEntity(accountNumber);
     account.withdraw(amount);
-    Account savedAccount = accountRepository.save(account);
-    return savedAccount;
+    return accountRepository.save(account);
   }
 
   @Override
@@ -58,15 +51,15 @@ class AccountServiceImpl implements AccountService {
 
   @Override
   public Account createAccount(Account account) {
-    Account savedAccount = accountRepository.save(account);
-    return savedAccount;
+    return accountRepository.save(account);
   }
 
   @Override
-  public Account updateAccount(Integer accountNumber, Account account) {
-    account.setAccountNumber(accountNumber);
-    Account savedAccount = accountRepository.save(account);
-    return savedAccount;
+  public Account updateAccountName(Integer accountNumber, String newName) {
+    Account account = getAccountEntity(accountNumber);
+    account.setFullName(newName);
+
+    return accountRepository.save(account);
   }
 
   @Override

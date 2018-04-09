@@ -55,18 +55,18 @@ public class AccountController {
   }
 
   @PostMapping("/{accountNumber}/deposit")
-  void deposit(@PathVariable("accountNumber") int accountNumber, @Valid @RequestBody Amount amount) {
-    accountService.deposit(accountNumber, amount.getAmount());
+  Account deposit(@PathVariable("accountNumber") int accountNumber, @Valid @RequestBody Amount amount) {
+    return accountService.deposit(accountNumber, amount.getAmount());
   }
 
   @PostMapping("/{accountNumber}/withdraw")
-  void withdraw(@PathVariable("accountNumber") int accountNumber, @Valid @RequestBody Amount amount) {
-    accountService.withdraw(accountNumber, amount.getAmount());
+  Account withdraw(@PathVariable("accountNumber") int accountNumber, @Valid @RequestBody Amount amount) {
+    return accountService.withdraw(accountNumber, amount.getAmount());
   }
 
-  @PutMapping("/{accountNumber}")
-  public Account updateAccount(@PathVariable("accountNumber") final Integer accountNumber, @RequestBody final Account account) {
-    return accountService.updateAccount(accountNumber, account);
+  @PutMapping("/{accountNumber}/name")
+  public Account updateAccountName(@PathVariable("accountNumber") final Integer accountNumber, @RequestBody final Name name) {
+    return accountService.updateAccountName(accountNumber, name.getName());
   }
 
   @DeleteMapping("/{accountNumber}")
